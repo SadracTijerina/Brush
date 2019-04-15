@@ -45,7 +45,7 @@ public class SetupActivity extends AppCompatActivity {
 
     String currentUserID;
 
-    final static int Gallary_Pick = 1;
+    final static int Gallery_Pick = 1;
 
 
     @Override
@@ -56,7 +56,7 @@ public class SetupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("Profile Images");
+        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profileimage");
 
         username = (EditText) findViewById(R.id.setup_username);
         name = (EditText) findViewById(R.id.setup_name);
@@ -83,9 +83,11 @@ public class SetupActivity extends AppCompatActivity {
                 Intent galleryIntent = new Intent();
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, Gallary_Pick);
+                startActivityForResult(galleryIntent, Gallery_Pick);
             }
         });
+
+
 
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,14 +95,16 @@ public class SetupActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
+
                     if (dataSnapshot.hasChild("profileimage"))
                     {
 
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.drawable.default_profile_picture).into(profilePicture);
                     }
-                    else
-                        {
+                    //Always goes to this else statement
+                    else {
+                            //Always goes to this statement
                         Toast.makeText(SetupActivity.this, "Please select profile image first.", Toast.LENGTH_SHORT).show();
 
                     }
@@ -117,14 +121,15 @@ public class SetupActivity extends AppCompatActivity {
     }
 
 
-
+    //Todo on activty result it seems to only go to the first if statement and thats it. It doesnt seem to go to the else statment either
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
 
         //This gets the URI of the image the user selects before cropped
-        if(requestCode==Gallary_Pick && resultCode==RESULT_OK && data!=null)
+        //It always goes to this if statement
+        if(requestCode== Gallery_Pick && resultCode==RESULT_OK && data!=null)
         {
             Uri ImageUri = data.getData(); //good
 
@@ -134,7 +139,9 @@ public class SetupActivity extends AppCompatActivity {
                     .start(this); //This line I am unsure of if its just this or setupactivity
         }
 
+
         //This gets the URI of the image that has been cropped
+        //It seems like it never goes to this if statement
         if(resultCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
             CropImage.ActivityResult result = CropImage.getActivityResult(data); //good
@@ -223,6 +230,7 @@ public class SetupActivity extends AppCompatActivity {
             HashMap userMap = new HashMap();
             userMap.put("Name", Name);
             userMap.put("Username", UserName);
+            userMap.put("Picture", "" ); // This is their profile picture
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
