@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SetupActivity"></activity>
-        <activity android:name=".StartActivity"></activity>
+        <activity android:name=".StartActivity" />
         <activity android:name=".LoginActivty" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">

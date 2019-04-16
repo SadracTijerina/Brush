@@ -3,14 +3,24 @@ package com.example.brush;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ImageView;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import java.io.IOException;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +55,8 @@ public class SetupActivity extends AppCompatActivity {
 
     String currentUserID;
 
+    String tagerino = "333";
+
     final static int Gallery_Pick = 1;
 
 
@@ -52,7 +64,6 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
-
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
@@ -80,14 +91,9 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, Gallery_Pick);
+                checkAndroidVersion();
             }
         });
-
-
 
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,16 +101,14 @@ public class SetupActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-
                     if (dataSnapshot.hasChild("profileimage"))
                     {
 
                         String image = dataSnapshot.child("profileimage").getValue().toString();
                         Picasso.get().load(image).placeholder(R.drawable.default_profile_picture).into(profilePicture);
                     }
-                    //Always goes to this else statement
-                    else {
-                            //Always goes to this statement
+                    else
+                    {
                         Toast.makeText(SetupActivity.this, "Please select profile image first.", Toast.LENGTH_SHORT).show();
 
                     }
@@ -121,30 +125,76 @@ public class SetupActivity extends AppCompatActivity {
     }
 
 
-    //Todo on activty result it seems to only go to the first if statement and thats it. It doesnt seem to go to the else statment either
+    public void checkAndroidVersion(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
+            } catch (Exception e)
+            {
+
+            }
+        } else {
+            pickImage();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 555 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            pickImage();
+        } else {
+            checkAndroidVersion();
+        }
+    }
+
+    public void pickImage() {
+        CropImage.startPickImageActivity(this);
+    }
+
+    //CROP REQUEST JAVA
+    private void croprequest(Uri imageUri) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+    }
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        super.onActivityResult(requestCode, resultCode, data);
-
         //This gets the URI of the image the user selects before cropped
-        //It always goes to this if statement
-        if(requestCode== Gallery_Pick && resultCode==RESULT_OK && data!=null)
+        if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
         {
-            Uri ImageUri = data.getData(); //good
+            Uri ImageUri = data.getData();
 
             //This directs it to the crop image
-            CropImage.activity() //good
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this); //This line I am unsure of if its just this or setupactivity
+            CropImage.activity(ImageUri)
+                    .start(this);
+
+
+            Log.d(tagerino,"Image selection working");
         }
 
+        /*
+           So it just goes to the end of this function. It doesn't go to the if or else statement. It just skips it to the end
+           of the function
+           Something is wrong with CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+           Because resultCode is suppose to be -1 because it equals RESULT_OK
+
+        */
+
+        Log.d(tagerino,"Result code: " + resultCode + " CropImage: "+ CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
 
         //This gets the URI of the image that has been cropped
-        //It seems like it never goes to this if statement
-        if(resultCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data); //good
+            Log.d(tagerino,"URI of the image that has been cropped is gucci");
+
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            Log.d(tagerino,"result: " + result + " resultCode: " + resultCode + " RESULT_OK: " + RESULT_OK);
 
             if(resultCode == RESULT_OK)
             {
@@ -200,10 +250,17 @@ public class SetupActivity extends AppCompatActivity {
             }
             else
             {
+                Log.d(tagerino,"URI of the image has failed r.i.p");
                 Toast.makeText(SetupActivity.this,"Error occurred: image cant be cropped. Try again" , Toast.LENGTH_SHORT).show();
                 loadingBar.dismiss();
             }
         }
+        else
+        {
+            Log.d(tagerino, "At else statement boi");
+        }
+
+        Log.d(tagerino, "at the end of onActivityResult");
     }
 
     private void SaveAccountSetupInformation()
@@ -230,7 +287,7 @@ public class SetupActivity extends AppCompatActivity {
             HashMap userMap = new HashMap();
             userMap.put("Name", Name);
             userMap.put("Username", UserName);
-            userMap.put("Picture", "" ); // This is their profile picture
+
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -255,8 +312,7 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
-    private void SendUserToMainActivity()
-    {
+    private void SendUserToMainActivity() {
         Intent mainIntent = new Intent(SetupActivity.this, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
