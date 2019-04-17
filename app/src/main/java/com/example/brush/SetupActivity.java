@@ -3,6 +3,7 @@ package com.example.brush;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class SetupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profileimage");
+        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile images");
 
         username = (EditText) findViewById(R.id.setup_username);
         name = (EditText) findViewById(R.id.setup_name);
@@ -141,22 +142,26 @@ public class SetupActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 555 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             pickImage();
+            //croprequest();
         } else {
             checkAndroidVersion();
         }
     }
 
     public void pickImage() {
-        CropImage.startPickImageActivity(this);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
     }
 
-    //CROP REQUEST JAVA
+/*    //CROP REQUEST JAVA
     private void croprequest(Uri imageUri) {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setMultiTouchEnabled(true)
                 .start(this);
-    }
+    }*/
 
 
 
@@ -164,8 +169,10 @@ public class SetupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         //This gets the URI of the image the user selects before cropped
-        if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
+/*        if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
         {
+            Log.d(tagerino,"Image selection working");
+
             Uri ImageUri = data.getData();
 
             //This directs it to the crop image
@@ -173,21 +180,27 @@ public class SetupActivity extends AppCompatActivity {
                     .start(this);
 
 
-            Log.d(tagerino,"Image selection working");
         }
+        else if(data == null)
+        {
+            Log.d(tagerino,"data null");
+        }
+        else
+        {
+            Log.d(tagerino,"Request Code: " + requestCode +", ResultCode "+resultCode);
+        }*/
 
         /*
            So it just goes to the end of this function. It doesn't go to the if or else statement. It just skips it to the end
            of the function
            Something is wrong with CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
            Because resultCode is suppose to be -1 because it equals RESULT_OK
-
         */
 
         Log.d(tagerino,"Result code: " + resultCode + " CropImage: "+ CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
 
         //This gets the URI of the image that has been cropped
-        if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
             Log.d(tagerino,"URI of the image that has been cropped is gucci");
 
@@ -197,6 +210,7 @@ public class SetupActivity extends AppCompatActivity {
 
             if(resultCode == RESULT_OK)
             {
+                Log.d(tagerino,"Crop successful");
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile picture");
                 loadingBar.show();
@@ -206,6 +220,8 @@ public class SetupActivity extends AppCompatActivity {
 
                 StorageReference filePath = UserProfileImageRef.child(currentUserID + ".jpg");
 
+                Log.d(tagerino,"Store successful");
+
                 //We stored the file into the profile images folder
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
                 {
@@ -214,8 +230,10 @@ public class SetupActivity extends AppCompatActivity {
                     {
                         if(task.isSuccessful())
                         {
+                            Log.d(tagerino,"Task successful");
                             Toast.makeText(SetupActivity.this, "Image stored successfully to Firebase", Toast.LENGTH_SHORT).show();
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
+
 
                             //This is when we store it into the firebase database
                             UsersRef.child("profileimage").setValue(downloadUrl)
@@ -231,6 +249,7 @@ public class SetupActivity extends AppCompatActivity {
                                             }
                                             else
                                             {
+                                                Log.d(tagerino,"Profile image stored to database");
                                                 Intent setupIntent = new Intent(SetupActivity.this, SetupActivity.class);
                                                 startActivity(setupIntent);
                                                 Toast.makeText(SetupActivity.this, "Profile Image stored into Database Successfully", Toast.LENGTH_SHORT).show();
@@ -241,6 +260,7 @@ public class SetupActivity extends AppCompatActivity {
                         }
                         else
                         {
+                            Log.d(tagerino,"Task not successful");
                             String message = task.getException().getMessage();
                             Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                         }
