@@ -94,8 +94,8 @@ public class LoginActivty extends AppCompatActivity {
                             else
                             {
                                 String message = task.getException().getMessage();
-                                finish();
                                 Toast.makeText(LoginActivty.this, "Error occurred: "+ message, Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
                             }
                         }
                     });

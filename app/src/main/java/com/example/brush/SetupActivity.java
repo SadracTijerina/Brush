@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import java.io.IOException;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,10 +58,13 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
     private StorageReference UserProfileImageRef;
+    private FirebaseStorage firebaseStorage;
 
     String currentUserID;
 
     String tagerino = "333";
+
+    Uri imageUri;
 
     final static int Gallery_Pick = 1;
 
@@ -83,6 +87,7 @@ public class SetupActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
 
 
+        //When button is clicked, call function
         SaveInformationbuttion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -92,7 +97,7 @@ public class SetupActivity extends AppCompatActivity {
         });
 
 
-        //This function opens the the camera/gallery
+        //When profile picture is clicked, call the check android version
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -110,12 +115,9 @@ public class SetupActivity extends AppCompatActivity {
                     if (dataSnapshot.hasChild("profileimage"))
                     {
 
-                        String image = dataSnapshot.child("profileimage").getValue().toString();
-                        Picasso.get().load(image).placeholder(R.drawable.default_profile_picture).into(profilePicture);
                     }
                     else
                     {
-                        Toast.makeText(SetupActivity.this, "Please select profile image first.", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -131,7 +133,10 @@ public class SetupActivity extends AppCompatActivity {
     }
 
 
+
+
     public void checkAndroidVersion(){
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
@@ -139,6 +144,7 @@ public class SetupActivity extends AppCompatActivity {
             {
 
             }
+            //If versions good we call the pick image function
         } else {
             pickImage();
         }
@@ -153,7 +159,7 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
-    //This crops and picks the image
+    //This crops and picks the image and afterwards goes to the onActivityResult function
     public void pickImage() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -163,30 +169,27 @@ public class SetupActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(tagerino, "Result code: " + resultCode + " CropImage: " + CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
-
         //This gets the URI of the image that has been cropped
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            Log.d(tagerino, "URI of the image that has been cropped is gucci");
 
+            //The result variable is the result of the crop image.
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            Log.d(tagerino, "result: " + result + " resultCode: " + resultCode + " RESULT_OK: " + RESULT_OK);
-
             if (resultCode == RESULT_OK) {
-                Log.d(tagerino, "Crop successful");
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile picture");
                 loadingBar.show();
                 loadingBar.setCanceledOnTouchOutside(true);
 
-                Uri file = result.getUri();
+                imageUri = result.getUri();
 
+                //This is to get the contents of the image
                 StorageMetadata metadata = new StorageMetadata.Builder()
                         .setContentType("image/jpeg")
                         .build();
 
-                UploadTask uploadTask = UserProfileImageRef.child(currentUserID).putFile(file, metadata);
+                //This uploads the file with all its content to the firebase storage
+                UploadTask uploadTask = UserProfileImageRef.child(currentUserID).putFile(imageUri, metadata);
 
                 uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -210,9 +213,16 @@ public class SetupActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Handle successful uploads on complete
+
+                        //Storing the image to the database
+                        final String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                        UsersRef.child("Profile Picture").setValue(currentUserID);
+
+                        profilePicture.setImageURI(imageUri);
+
                         Toast.makeText(SetupActivity.this, "Image stored successfully to Firebase", Toast.LENGTH_SHORT).show();
-                        Intent setupIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                        startActivity(setupIntent);
+                        //Intent setupIntent = new Intent(SetupActivity.this, SetupActivity.class);
+                        //startActivity(setupIntent);
 
                         loadingBar.dismiss();
                     }
@@ -245,6 +255,7 @@ public class SetupActivity extends AppCompatActivity {
             HashMap userMap = new HashMap();
             userMap.put("Name", Name);
             userMap.put("Username", UserName);
+            //userMap.put("Profile Picture", file);
 
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
