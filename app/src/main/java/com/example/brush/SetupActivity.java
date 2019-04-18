@@ -23,6 +23,8 @@ import android.provider.MediaStore;
 import java.io.IOException;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -64,6 +69,7 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
+
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
@@ -142,12 +148,12 @@ public class SetupActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 555 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             pickImage();
-            //croprequest();
         } else {
             checkAndroidVersion();
         }
     }
 
+    //This crops and picks the image
     public void pickImage() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -155,131 +161,64 @@ public class SetupActivity extends AppCompatActivity {
                 .start(this);
     }
 
-/*    //CROP REQUEST JAVA
-    private void croprequest(Uri imageUri) {
-        CropImage.activity(imageUri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setMultiTouchEnabled(true)
-                .start(this);
-    }*/
-
-
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        //This gets the URI of the image the user selects before cropped
-/*        if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null)
-        {
-            Log.d(tagerino,"Image selection working");
-
-            Uri ImageUri = data.getData();
-
-            //This directs it to the crop image
-            CropImage.activity(ImageUri)
-                    .start(this);
-
-
-        }
-        else if(data == null)
-        {
-            Log.d(tagerino,"data null");
-        }
-        else
-        {
-            Log.d(tagerino,"Request Code: " + requestCode +", ResultCode "+resultCode);
-        }*/
-
-        /*
-           So it just goes to the end of this function. It doesn't go to the if or else statement. It just skips it to the end
-           of the function
-           Something is wrong with CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-           Because resultCode is suppose to be -1 because it equals RESULT_OK
-        */
-
-        Log.d(tagerino,"Result code: " + resultCode + " CropImage: "+ CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(tagerino, "Result code: " + resultCode + " CropImage: " + CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE);
 
         //This gets the URI of the image that has been cropped
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-        {
-            Log.d(tagerino,"URI of the image that has been cropped is gucci");
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            Log.d(tagerino, "URI of the image that has been cropped is gucci");
 
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            Log.d(tagerino,"result: " + result + " resultCode: " + resultCode + " RESULT_OK: " + RESULT_OK);
+            Log.d(tagerino, "result: " + result + " resultCode: " + resultCode + " RESULT_OK: " + RESULT_OK);
 
-            if(resultCode == RESULT_OK)
-            {
-                Log.d(tagerino,"Crop successful");
+            if (resultCode == RESULT_OK) {
+                Log.d(tagerino, "Crop successful");
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile picture");
                 loadingBar.show();
                 loadingBar.setCanceledOnTouchOutside(true);
 
-                Uri resultUri = result.getUri();
+                Uri file = result.getUri();
 
-                StorageReference filePath = UserProfileImageRef.child(currentUserID + ".jpg");
+                StorageMetadata metadata = new StorageMetadata.Builder()
+                        .setContentType("image/jpeg")
+                        .build();
 
-                Log.d(tagerino,"Store successful");
+                UploadTask uploadTask = UserProfileImageRef.child(currentUserID).putFile(file, metadata);
 
-                //We stored the file into the profile images folder
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
-                {
+                uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
-                    {
-                        if(task.isSuccessful())
-                        {
-                            Log.d(tagerino,"Task successful");
-                            Toast.makeText(SetupActivity.this, "Image stored successfully to Firebase", Toast.LENGTH_SHORT).show();
-                            final String downloadUrl = task.getResult().getDownloadUrl().toString();
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        System.out.println("Upload is " + progress + "% done");
+                    }
+                }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
+                        System.out.println("Upload is paused");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        loadingBar.dismiss();
+                        Toast.makeText(SetupActivity.this, "Failure storing image to Firebase", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Handle successful uploads on complete
+                        Toast.makeText(SetupActivity.this, "Image stored successfully to Firebase", Toast.LENGTH_SHORT).show();
+                        Intent setupIntent = new Intent(SetupActivity.this, SetupActivity.class);
+                        startActivity(setupIntent);
 
-
-                            //This is when we store it into the firebase database
-                            UsersRef.child("profileimage").setValue(downloadUrl)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task)
-                                        {
-                                            if(!task.isSuccessful())
-                                            {
-                                                String message = task.getException().getMessage();
-                                                Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                            else
-                                            {
-                                                Log.d(tagerino,"Profile image stored to database");
-                                                Intent setupIntent = new Intent(SetupActivity.this, SetupActivity.class);
-                                                startActivity(setupIntent);
-                                                Toast.makeText(SetupActivity.this, "Profile Image stored into Database Successfully", Toast.LENGTH_SHORT).show();
-                                                loadingBar.dismiss();
-                                            }
-                                        }
-                                    });
-                        }
-                        else
-                        {
-                            Log.d(tagerino,"Task not successful");
-                            String message = task.getException().getMessage();
-                            Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                        }
+                        loadingBar.dismiss();
                     }
                 });
             }
-            else
-            {
-                Log.d(tagerino,"URI of the image has failed r.i.p");
-                Toast.makeText(SetupActivity.this,"Error occurred: image cant be cropped. Try again" , Toast.LENGTH_SHORT).show();
-                loadingBar.dismiss();
-            }
         }
-        else
-        {
-            Log.d(tagerino, "At else statement boi");
-        }
-
-        Log.d(tagerino, "at the end of onActivityResult");
     }
 
     private void SaveAccountSetupInformation()
