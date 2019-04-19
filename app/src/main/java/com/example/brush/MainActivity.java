@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.nav_home:
                 Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
+;
                 break;
 
             case R.id.nav_profile:
@@ -190,6 +191,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_post:
+                Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
+                newPostIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(newPostIntent);
                 Toast.makeText(this, "post", Toast.LENGTH_SHORT).show();
                 break;
 

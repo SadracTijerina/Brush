@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_post_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:scaleType="fitCenter"
+    tools:context=".GalleryPostActivity">
+
+    <ImageButton
+        android:id="@+id/post_image"
+        android:layout_width="305dp"
+        android:layout_height="233dp"
+        android:layout_alignParentStart="true"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginLeft="57dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="425dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_menu_gallery"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="125dp" />
+
+    <EditText
+        android:id="@+id/post_description"
+        android:layout_width="294dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginBottom="299dp"
+        android:autofillHints=""
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:hint="Write Post"
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:paddingTop="1dp"
+        android:scaleType="fitCenter" />
+
+    <RadioButton
+        android:id="@+id/post_category1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="193dp"
+        android:layout_marginRight="193dp"
+        android:layout_marginBottom="259dp"
+        android:text="Digital Art" />
+
+    <RadioButton
+        android:id="@+id/post_category2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/post_category1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-2dp"
+        android:layout_marginBottom="222dp"
+        android:text="Traditional Art" />
+
+    <RadioButton
+        android:id="@+id/post_category3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="175dp"
+        android:layout_marginRight="175dp"
+        android:layout_marginBottom="188dp"
+        android:text="Photography" />
+
+    <RadioButton
+        android:id="@+id/post_category4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/post_category2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="158dp"
+        android:text="Artisan Crafts" />
+
+    <Button
+        android:id="@+id/a_post"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginLeft="112dp"
+        android:layout_marginBottom="74dp"
+        android:background="@drawable/buttons"
+        android:padding="10dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitCenter"
+        android:text="Post"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorWhite" />
+
+</RelativeLayout>

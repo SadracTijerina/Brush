@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_post_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:scaleType="fitCenter"
+    android:visibility="visible"
+    tools:context=".GalleryPostActivity">
+
+    <ImageButton
+        android:id="@+id/bid_image"
+        android:layout_width="305dp"
+        android:layout_height="233dp"
+        android:layout_alignParentStart="true"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginBottom="473dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_menu_gallery"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="125dp" />
+
+    <EditText
+        android:id="@+id/bid_description"
+        android:layout_width="294dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="364dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:ems="10"
+        android:hint="Write Post"
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:paddingTop="1dp"
+        android:scaleType="fitCenter" />
+
+    <Button
+        android:id="@+id/a_post"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="104dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginBottom="61dp"
+        android:background="@drawable/buttons"
+        android:padding="10dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitCenter"
+        android:text="Post"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorWhite" />
+
+    <EditText
+        android:id="@+id/bid_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/a_post"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:layout_marginBottom="206dp"
+        android:ems="10"
+        android:hint="Enter Price"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/bid_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/a_post"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:layout_marginBottom="164dp"
+        android:ems="10"
+        android:hint="Enter bidding time in days"
+        android:inputType="number" />
+
+    <RadioButton
+        android:id="@+id/bid_category1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="165dp"
+        android:layout_marginRight="165dp"
+        android:layout_marginBottom="171dp"
+        android:text="Photography" />
+
+    <RadioButton
+        android:id="@+id/bid_category2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:layout_marginBottom="207dp"
+        android:text="Traditional Art" />
+
+    <RadioButton
+        android:id="@+id/bid_category3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="185dp"
+        android:layout_marginRight="185dp"
+        android:layout_marginBottom="238dp"
+        android:text="Digital Art" />
+
+    <RadioButton
+        android:id="@+id/bid_category4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="158dp"
+        android:layout_marginRight="158dp"
+        android:layout_marginBottom="139dp"
+        android:text="Artisan Crafts" />
+
+</RelativeLayout>

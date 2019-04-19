@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_post_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:scaleType="fitCenter"
+    tools:context=".AnnouncementPostActivity">
+
+
+    <EditText
+        android:id="@+id/a_description"
+        android:layout_width="294dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="67dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginBottom="518dp"
+        android:autofillHints=""
+        android:background="@null"
+        android:ems="10"
+        android:hint="Write announcement here..."
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:paddingTop="1dp"
+        android:scaleType="fitCenter" />
+
+    <RadioButton
+        android:id="@+id/a_category1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="179dp"
+        android:layout_marginRight="179dp"
+        android:layout_marginBottom="406dp"
+        android:text="Digital Art" />
+
+    <RadioButton
+        android:id="@+id/a_category2"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="363dp"
+        android:text="TraditionalArt" />
+
+    <RadioButton
+        android:id="@+id/a_category3"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="135dp"
+        android:layout_marginRight="135dp"
+        android:layout_marginBottom="319dp"
+        android:text="Photography" />
+
+    <RadioButton
+        android:id="@+id/a_category4"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="138dp"
+        android:layout_marginRight="138dp"
+        android:layout_marginBottom="271dp"
+        android:text="Artisan Crafts" />
+
+    <Button
+        android:id="@+id/a_post"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="109dp"
+        android:layout_marginLeft="109dp"
+        android:layout_marginBottom="179dp"
+        android:background="@drawable/buttons"
+        android:padding="10dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitCenter"
+        android:text="Post"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorWhite" />
+
+</RelativeLayout>
