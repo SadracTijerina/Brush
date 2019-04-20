@@ -8,11 +8,11 @@
 
     <EditText
         android:id="@+id/login_email"
-        android:layout_width="373dp"
+        android:layout_width="337dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="308dp"
+        android:layout_marginTop="273dp"
         android:background="@drawable/inputs"
         android:ems="10"
         android:hint="Email"
@@ -22,11 +22,11 @@
     <!--This is password box-->
     <EditText
         android:id="@+id/login_password"
-        android:layout_width="369dp"
+        android:layout_width="337dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="381dp"
+        android:layout_marginTop="348dp"
         android:background="@drawable/inputs"
         android:ems="10"
         android:hint="Password"
@@ -37,8 +37,10 @@
         android:id="@+id/login_logo"
         android:layout_width="184dp"
         android:layout_height="164dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="78dp"
+        android:layout_marginLeft="78dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:background="@null"
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="152dp"
         android:background="@drawable/buttons"
         android:text="Login" />
 

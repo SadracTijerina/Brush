@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -40,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
+    private FirebaseStorage firebaseStorage;
 
     String currentUserID;
+    String TAG = "333";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +88,15 @@ public class MainActivity extends AppCompatActivity {
                         String userName = dataSnapshot.child("Username").getValue().toString();
 
                         //This is displaying the users name in the navigation bard
-                        NavUserName.setText(userName);
+                        NavUserName.setText(name);
                     }
                     if(dataSnapshot.hasChild("Profile Picture"))
                     {
+                        Log.d(TAG, "In profile picture");
                         //This is getting the users profile picture from database and displaying it to the navigation bar
                         String profilePicture = dataSnapshot.child("Profile Picture").getValue().toString();
-                        Picasso.get().load(profilePicture).into(NavProfileImage);
+                        //Picasso.get().load(profilePicture).into(NavProfileImage);
+
 
                     }
 

@@ -20,10 +20,12 @@
             android:id="@+id/app_bar_layout_logo"
             android:layout_width="80dp"
             android:layout_height="50dp"
+            android:layout_alignStart="@+id/main_page_toolbar"
+            android:layout_alignLeft="@+id/main_page_toolbar"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="160dp"
-            android:layout_marginLeft="160dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="141dp"
+            android:layout_marginLeft="141dp"
+            android:layout_marginTop="6dp"
             android:adjustViewBounds="true"
             android:src="@drawable/logo_word" />
 
