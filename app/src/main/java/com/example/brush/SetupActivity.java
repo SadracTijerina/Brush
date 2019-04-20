@@ -62,7 +62,7 @@ public class SetupActivity extends AppCompatActivity {
 
     String currentUserID;
 
-    String tagerino = "333";
+    String TAG = "333";
 
     Uri imageUri;
 
@@ -112,13 +112,30 @@ public class SetupActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-                    if (dataSnapshot.hasChild("profileimage"))
+                    if (dataSnapshot.hasChild("Profile Picture"))
                     {
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+                        //This is trying to get the image url if it finds it it goes to onSuccess function
+                        storageRef.child("profile images/" + currentUserID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // uri is the link, we just have to change it to a string
+                                String Picture = uri.toString();
+                                Picasso.get().load(Picture).into(profilePicture);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                Log.d(TAG, "onFailure:");
+                            }
+                        });
 
                     }
                     else
                     {
-
+                        Toast.makeText(SetupActivity.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -131,8 +148,6 @@ public class SetupActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
     public void checkAndroidVersion(){

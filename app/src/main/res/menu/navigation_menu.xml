@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/nav_home"
-        android:title="Home" />
+        android:title="Home"
+        android:icon="@drawable/nav_home"
+        app:iconTint="@color/colorPrimary"/>
     <item
         android:id="@+id/nav_profile"
-        android:title="Profile" />
-        <!--android:icon="@folder/fileName"/> This is if we want to add icons to each section-->
+        android:title="Profile"
+        android:icon="@drawable/nav_profile"
+        app:iconTint="@color/colorPrimary"/>
 
     <item
         android:id="@+id/nav_post"
-        android:title="Post" />
+        android:title="Post"
+        android:icon="@drawable/nav_post"
+        app:iconTint="@color/colorPrimary"/>
 
     <item
-        android:id="@+id/nav_friends"
-        android:title="Friends" />
+        android:id="@+id/nav_followers"
+        android:title="Followers"
+        android:icon="@drawable/nav_followers"
+        app:iconTint="@color/colorPrimary"/>
 
     <item
         android:id="@+id/nav_search"
-        android:title="Search" />
+        android:title="Search"
+        android:icon="@drawable/nav_search"
+        app:iconTint="@color/colorPrimary"/>
 
 
 
     <item
         android:id="@+id/nav_settings"
-        android:title="Settings" />
+        android:title="Settings"
+        android:icon="@drawable/nav_settings"
+        app:iconTint="@color/colorPrimary"/>
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Logout" />
+        android:title="Logout"
+        android:icon="@drawable/nav_logout"
+        app:iconTint="@color/colorPrimary"/>
 
 </menu>

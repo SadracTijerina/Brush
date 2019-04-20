@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
-    private FirebaseStorage firebaseStorage;
+    private StorageReference storageRef;
+    private FirebaseStorage storage;
 
     String currentUserID;
     String TAG = "333";
@@ -85,18 +88,29 @@ public class MainActivity extends AppCompatActivity {
                         //This is getting the users name and username from database.
                         // Make sure the child matches the databases names
                         String name = dataSnapshot.child("Name").getValue().toString();
-                        String userName = dataSnapshot.child("Username").getValue().toString();
 
                         //This is displaying the users name in the navigation bard
                         NavUserName.setText(name);
                     }
                     if(dataSnapshot.hasChild("Profile Picture"))
                     {
-                        Log.d(TAG, "In profile picture");
-                        //This is getting the users profile picture from database and displaying it to the navigation bar
-                        String profilePicture = dataSnapshot.child("Profile Picture").getValue().toString();
-                        //Picasso.get().load(profilePicture).into(NavProfileImage);
-
+                        storage = FirebaseStorage.getInstance();
+                        storageRef = storage.getReference();
+                        //This is trying to get the image url if it finds it it goes to onSuccess function
+                        storageRef.child("profile images/" + currentUserID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // uri is the link, we just have to change it to a string
+                                String profilePicture = uri.toString();
+                                Picasso.get().load(profilePicture).into(NavProfileImage);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                Log.d(TAG, "onFailure:");
+                            }
+                        });
 
                     }
 
@@ -204,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "post", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.nav_friends:
+            case R.id.nav_followers:
                 Toast.makeText(this, "friends", Toast.LENGTH_SHORT).show();
                 break;
 
