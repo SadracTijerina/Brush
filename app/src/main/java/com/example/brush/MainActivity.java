@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getUid();
+        currentUserID = mAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         //This is displaying the users name in the navigation bard
                         NavUserName.setText(name);
                     }
-                    if(dataSnapshot.hasChild("Profile Picture"))
+                    if(dataSnapshot.hasChild("profilePicture"))
                     {
                         storage = FirebaseStorage.getInstance();
                         storageRef = storage.getReference();
@@ -213,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.nav_post:
                 Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
-                newPostIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(newPostIntent);
                 Toast.makeText(this, "post", Toast.LENGTH_SHORT).show();
                 break;
@@ -223,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_search:
-                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+                Intent searchUsersIntent = new Intent(MainActivity.this, SearchUsersActivity.class);
+                startActivity(searchUsersIntent);
                 break;
 
             case R.id.nav_settings:

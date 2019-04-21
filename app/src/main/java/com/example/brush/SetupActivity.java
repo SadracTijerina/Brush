@@ -61,6 +61,7 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage;
 
     String currentUserID;
+    boolean hasImage = false;
 
     String TAG = "333";
 
@@ -112,7 +113,7 @@ public class SetupActivity extends AppCompatActivity {
             {
                 if(dataSnapshot.exists())
                 {
-                    if (dataSnapshot.hasChild("Profile Picture"))
+                    if (dataSnapshot.hasChild("profilePicture"))
                     {
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
@@ -132,10 +133,13 @@ public class SetupActivity extends AppCompatActivity {
                             }
                         });
 
+                        hasImage = true;
+
                     }
                     else
                     {
                         Toast.makeText(SetupActivity.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
+                        hasImage = false;
                     }
                 }
             }
@@ -231,7 +235,7 @@ public class SetupActivity extends AppCompatActivity {
 
                         //Storing the image to the database
                         final String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                        UsersRef.child("Profile Picture").setValue(currentUserID);
+                        UsersRef.child("profilePicture").setValue(currentUserID);
 
                         profilePicture.setImageURI(imageUri);
 
@@ -253,11 +257,15 @@ public class SetupActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(UserName))
         {
-            Toast.makeText(SetupActivity.this,"Please write your username", Toast.LENGTH_SHORT);
+            Toast.makeText(SetupActivity.this,"Please write your username", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(Name))
         {
-            Toast.makeText(SetupActivity.this,"Please write your name", Toast.LENGTH_SHORT);
+            Toast.makeText(SetupActivity.this,"Please write your name", Toast.LENGTH_SHORT).show();
+        }
+        else if (!hasImage)
+        {
+            Toast.makeText(SetupActivity.this,"Please upload a picture", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -270,8 +278,6 @@ public class SetupActivity extends AppCompatActivity {
             HashMap userMap = new HashMap();
             userMap.put("Name", Name);
             userMap.put("Username", UserName);
-            //userMap.put("Profile Picture", file);
-
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
