@@ -47,7 +47,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
-        holder.user_name.setText(userNameList.get(position));
+        holder.user_name.setText("@" + userNameList.get(position));
         Glide.with(context).load(profilePicList).into(holder.profileImage);
 
         holder.user_name.setOnClickListener(new View.OnClickListener() {

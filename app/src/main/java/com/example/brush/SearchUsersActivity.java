@@ -2,7 +2,9 @@ package com.example.brush;
 
 import android.content.Context;
 import android.media.Image;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,6 +50,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
+    private StorageReference storageReference;
 
     ArrayList<String> fullNameList;
     ArrayList<String> usernameList;
@@ -141,20 +148,34 @@ public class SearchUsersActivity extends AppCompatActivity {
                     String uid = snapshot.getKey();
                     String name = snapshot.child("Name").getValue(String.class);
                     String username = snapshot.child("Username").getValue(String.class);
-                    String profilePic = snapshot.child("profilePicture").getValue(String.class);
+                    final String profilePic = snapshot.child("profilePicture").getValue(String.class);
 
-                    if(name.toLowerCase().contains(searchedString.toLowerCase()))
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    storageReference = storage.getReference();
+                    
+                    if (username.toLowerCase().contains(searchedString.toLowerCase()))
                     {
                         fullNameList.add(name);
                         usernameList.add(username);
-                        profilPicList.add(profilePic);
-                        counter++;
-                    }
-                    else if (username.toLowerCase().contains(searchedString.toLowerCase()))
-                    {
-                        fullNameList.add(name);
-                        usernameList.add(username);
-                        profilPicList.add(profilePic);
+
+                        storageReference.child("profile images/" + profilePic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // uri is the link, we just have to change it to a string
+                                Log.d(TAG, "onSuccess: Storage reference");
+                                String Picture = uri.toString();
+                                Log.d(TAG, "Picture: "+ Picture);
+                                profilPicList.add(Picture);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                Log.d(TAG, "onFailure:");
+                            }
+                        });
+
+                        //profilPicList.add(profilePic);
                         counter++;
                     }
 

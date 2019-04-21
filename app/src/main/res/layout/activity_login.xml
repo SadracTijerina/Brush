@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivty">
 
+    <include
+        android:id="@+id/login_toolbar"
+        layout="@layout/app_bar_layout"
+        android:layout_width="match_parent"
+        ></include>
+
     <EditText
         android:id="@+id/login_email"
         android:layout_width="337dp"
@@ -56,5 +62,20 @@
         android:layout_marginBottom="152dp"
         android:background="@drawable/buttons"
         android:text="Login" />
+
+    <TextView
+        android:id="@+id/login_title"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/login_toolbar"
+        android:layout_alignRight="@+id/login_toolbar"
+        android:layout_alignBottom="@+id/login_toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="Log in"
+        android:textSize="20dp"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
