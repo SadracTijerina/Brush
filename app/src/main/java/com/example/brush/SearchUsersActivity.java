@@ -1,9 +1,6 @@
 package com.example.brush;
 
-import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,13 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,21 +21,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchUsersActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    private ImageButton searchButton;
     private EditText inputText;
 
     private RecyclerView searchResultList;
@@ -54,7 +41,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
     ArrayList<String> fullNameList;
     ArrayList<String> usernameList;
-    ArrayList<String> profilPicList;
+    ArrayList<String> profilePicList;
 
     SearchAdapter searchAdapter;
 
@@ -73,13 +60,11 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         searchResultList = (RecyclerView) findViewById(R.id.search_result_list);
 
-
-        searchButton = (ImageButton) findViewById(R.id.search_user_button);
         inputText = (EditText) findViewById(R.id.search_box);
 
         fullNameList = new ArrayList<>();
         usernameList = new ArrayList<>();
-        profilPicList = new ArrayList<>();
+        profilePicList = new ArrayList<>();
 
 
         mToolbar = (Toolbar) findViewById(R.id.search_users_bar_layout);
@@ -102,17 +87,15 @@ public class SearchUsersActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.d(TAG, "afterTextChanged: In function");
-                if (!s.toString().isEmpty()) {
-                    Log.d(TAG, "afterTextChanged: In if");
-
+                if (!s.toString().isEmpty())
+                {
                     setAdapter(s.toString());
-                } else {
-                    Log.d(TAG, "afterTextChanged: In else");
+                }
+                else {
 
                     fullNameList.clear();
                     usernameList.clear();
-                    profilPicList.clear();
+                    profilePicList.clear();
                     searchResultList.removeAllViews();
 
                 }
@@ -123,19 +106,13 @@ public class SearchUsersActivity extends AppCompatActivity {
 
     private void setAdapter(final String searchedString)
     {
-        Log.d(TAG, "setAdapter: In function");
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: Beginning");
-
-                Log.d(TAG, "dataSnapshot: " + dataSnapshot.getChildrenCount());
-
                 fullNameList.clear();
                 usernameList.clear();
-                profilPicList.clear();
+                profilePicList.clear();
                 searchResultList.removeAllViews();
 
                 int counter = 0;
@@ -162,10 +139,10 @@ public class SearchUsersActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 // uri is the link, we just have to change it to a string
-                                Log.d(TAG, "onSuccess: Storage reference");
                                 String Picture = uri.toString();
                                 Log.d(TAG, "Picture: "+ Picture);
-                                profilPicList.add(Picture);
+                                profilePicList.add(Picture);
+                                Log.d(TAG, "profilePicListSize " + profilePicList.size());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -175,7 +152,6 @@ public class SearchUsersActivity extends AppCompatActivity {
                             }
                         });
 
-                        //profilPicList.add(profilePic);
                         counter++;
                     }
 
@@ -187,7 +163,11 @@ public class SearchUsersActivity extends AppCompatActivity {
 
                 }
 
-                searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList, profilPicList);
+                Log.d(TAG, "profilePicListSizeeee: " + profilePicList.size());
+                Log.d(TAG, "fullnamesize: " + fullNameList.size());
+                Log.d(TAG, "usernamesize: " + usernameList.size());
+
+                searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList, profilePicList);
                 searchResultList.setAdapter(searchAdapter);
 
             }
