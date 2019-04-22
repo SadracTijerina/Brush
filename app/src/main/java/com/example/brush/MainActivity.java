@@ -226,10 +226,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(searchUsersIntent);
                 break;
 
-            case R.id.nav_settings:
-                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-                break;
-
             case R.id.nav_logout:
                 mAuth.signOut();
                 sendUserToStartActivity();

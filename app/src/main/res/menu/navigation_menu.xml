@@ -32,13 +32,6 @@
         app:iconTint="@color/colorPrimary"/>
 
 
-
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/nav_settings"
-        app:iconTint="@color/colorPrimary"/>
-
     <item
         android:id="@+id/nav_logout"
         android:title="Logout"

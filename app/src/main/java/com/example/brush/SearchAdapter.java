@@ -17,11 +17,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
+
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
     Context context;
     ArrayList<String> fullNameList;
     ArrayList<String> userNameList;
     ArrayList<String> profilePicList;
+
+    String TAG = "333";
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage;
@@ -52,19 +55,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.user_name.setText("@" + userNameList.get(position));
         //Glide.with(context).load(profilePicList).into(holder.profileImage);
 
-        Log.d("333", "profilePicSize " + profilePicList.size());
+        Log.d(TAG, "profilePicSize " + profilePicList.size());
 
         if(profilePicList.size() > 0)
         {
-            Log.d("333", "Profile Pic List " + profilePicList.get(position));
+            Log.d(TAG, "Profile Pic List " + profilePicList.get(position));
             Picasso.get().load(profilePicList.get(position)).into(holder.profileImage);
         }
-
 
         holder.user_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Full Name Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "userName Clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
