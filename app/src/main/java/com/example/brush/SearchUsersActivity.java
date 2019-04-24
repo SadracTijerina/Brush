@@ -48,6 +48,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
     ArrayList<String> fullNameList;
     ArrayList<String> usernameList;
+    ArrayList<String> userID;
 
     SearchAdapter searchAdapter;
 
@@ -191,6 +192,7 @@ public class SearchUsersActivity extends AppCompatActivity {
                     {
                         fullNameList.add(name);
                         usernameList.add(username);
+                        userID.add(uid);
                         counter++;
                     }
 
@@ -198,10 +200,8 @@ public class SearchUsersActivity extends AppCompatActivity {
                     if(i == dataSnapshot.getChildrenCount() )
                         break;
 
-
                     if(counter == 20)
                         break;
-
                 }
 
 
@@ -215,7 +215,7 @@ public class SearchUsersActivity extends AppCompatActivity {
     }
 
     private void Search() {
-        searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList);
+        searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList, userID);
         searchResultList.setAdapter(searchAdapter);
     }
 }

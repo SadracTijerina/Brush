@@ -28,6 +28,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     ArrayList<String> fullNameList;
     ArrayList<String> userNameList;
+    ArrayList<String> userID;
 
     String TAG = "333";
 
@@ -40,10 +41,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         }
     }
 
-    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList) {
+    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList, ArrayList<String> userID) {
         this.context = context;
         this.fullNameList = fullNameList;
         this.userNameList = userNameList;
+        this.userID = userID;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             @Override
             public void onClick(View view) {
                 //Intent intent = new Intent(view.getContext(), MainActivity.class);
+                //intent.putExtra("userID", userID.get(position));
                //context.startActivity(intent);
             }
         });
