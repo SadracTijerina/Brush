@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText UserEmail, emailConfirm, UserPassword, passwordConfirm;
     private Button createAccount;
+    private Toolbar toolbar;
 
 
     private FirebaseAuth mAuth;
@@ -71,6 +73,13 @@ public class RegisterActivity extends AppCompatActivity {
         passwordConfirm = (EditText) findViewById(R.id.register_password2);
 
         createAccount = (Button) findViewById(R.id.register_create_account);
+
+        toolbar = findViewById(R.id.register_toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Sign Up");
 
         loadingBar = new ProgressDialog(this);
 

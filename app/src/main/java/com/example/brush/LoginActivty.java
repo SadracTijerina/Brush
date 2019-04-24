@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +26,7 @@ public class LoginActivty extends AppCompatActivity {
     private Button login;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,13 @@ public class LoginActivty extends AppCompatActivity {
         UserPassword = (EditText) findViewById(R.id.login_password);
         login = (Button) findViewById(R.id.login_login);
         loadingBar = new ProgressDialog(LoginActivty.this);
+
+        toolbar = findViewById(R.id.login_toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Login");
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

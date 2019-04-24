@@ -1,6 +1,7 @@
 package com.example.brush;
 
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,9 +43,11 @@ public class SearchUsersActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private StorageReference storageReference;
 
+    private ImageButton searchDigital, searchArtisan, searchPhotography, searchTraditional;
+    private TextView textViewCategories;
+
     ArrayList<String> fullNameList;
     ArrayList<String> usernameList;
-    ArrayList<String> profilePicList;
 
     SearchAdapter searchAdapter;
 
@@ -62,17 +68,60 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         inputText = (EditText) findViewById(R.id.search_box);
 
+        searchDigital = (ImageButton) findViewById(R.id.search_digital);
+        searchArtisan = (ImageButton) findViewById(R.id.search_artisan);
+        searchPhotography = (ImageButton) findViewById(R.id.search_photography);
+        searchTraditional = (ImageButton) findViewById(R.id.search_traditional);
+        textViewCategories = (TextView) findViewById(R.id.categories_textview);
+
+
+
         fullNameList = new ArrayList<>();
         usernameList = new ArrayList<>();
-        profilePicList = new ArrayList<>();
 
 
         mToolbar = (Toolbar) findViewById(R.id.search_users_bar_layout);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         searchResultList.setHasFixedSize(true);
         searchResultList.setLayoutManager(new LinearLayoutManager(this));
         searchResultList.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        searchDigital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Show a feed of art related to that category
+                Log.d(TAG, "search digital ");
+            }
+        });
+
+        searchTraditional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show a feed of art related to that category
+                Log.d(TAG, "search traditonal ");
+            }
+        });
+
+        searchPhotography.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show a feed of art related to that category
+                Log.d(TAG, "search photography ");
+
+            }
+        });
+
+        searchArtisan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show a feed of art related to that category
+                Log.d(TAG, "search artisan ");
+            }
+        });
+
 
         inputText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,14 +138,24 @@ public class SearchUsersActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (!s.toString().isEmpty())
                 {
+                    searchDigital.setVisibility(View.GONE);
+                    searchArtisan.setVisibility(View.GONE);
+                    searchPhotography.setVisibility(View.GONE);
+                    searchTraditional.setVisibility(View.GONE);
+                    textViewCategories.setVisibility(View.GONE);
                     setAdapter(s.toString());
+                    Search();
                 }
                 else {
-
                     fullNameList.clear();
                     usernameList.clear();
-                    profilePicList.clear();
                     searchResultList.removeAllViews();
+
+                    searchDigital.setVisibility(View.VISIBLE);
+                    searchArtisan.setVisibility(View.VISIBLE);
+                    searchPhotography.setVisibility(View.VISIBLE);
+                    searchTraditional.setVisibility(View.VISIBLE);
+                    textViewCategories.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -112,7 +171,6 @@ public class SearchUsersActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fullNameList.clear();
                 usernameList.clear();
-                profilePicList.clear();
                 searchResultList.removeAllViews();
 
                 int counter = 0;
@@ -125,7 +183,6 @@ public class SearchUsersActivity extends AppCompatActivity {
                     String uid = snapshot.getKey();
                     String name = snapshot.child("Name").getValue(String.class);
                     String username = snapshot.child("Username").getValue(String.class);
-                    final String profilePic = snapshot.child("profilePicture").getValue(String.class);
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     storageReference = storage.getReference();
@@ -134,41 +191,19 @@ public class SearchUsersActivity extends AppCompatActivity {
                     {
                         fullNameList.add(name);
                         usernameList.add(username);
-
-                        storageReference.child("profile images/" + profilePic).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                // uri is the link, we just have to change it to a string
-                                String Picture = uri.toString();
-                                Log.d(TAG, "Picture: "+ Picture);
-                                profilePicList.add(Picture);
-                                Log.d(TAG, "profilePicListSize " + profilePicList.size());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                                Log.d(TAG, "onFailure:");
-                            }
-                        });
-
                         counter++;
                     }
 
+
                     if(i == dataSnapshot.getChildrenCount() )
                         break;
+
 
                     if(counter == 20)
                         break;
 
                 }
 
-                Log.d(TAG, "profilePicListSizeeee: " + profilePicList.size());
-                Log.d(TAG, "fullnamesize: " + fullNameList.size());
-                Log.d(TAG, "usernamesize: " + usernameList.size());
-
-                searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList, profilePicList);
-                searchResultList.setAdapter(searchAdapter);
 
             }
 
@@ -177,5 +212,10 @@ public class SearchUsersActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void Search() {
+        searchAdapter = new SearchAdapter(SearchUsersActivity.this, fullNameList, usernameList);
+        searchResultList.setAdapter(searchAdapter);
     }
 }

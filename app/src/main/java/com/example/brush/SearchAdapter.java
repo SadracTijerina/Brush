@@ -1,7 +1,9 @@
 package com.example.brush;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,28 +22,28 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
     Context context;
+
+    Context userProfile;
+
+
     ArrayList<String> fullNameList;
     ArrayList<String> userNameList;
-    ArrayList<String> profilePicList;
 
     String TAG = "333";
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
-        ImageView profileImage;
         TextView user_name;
 
         public SearchViewHolder(View itemView) {
             super(itemView);
-            profileImage = (ImageView) itemView.findViewById(R.id.all_users_profile_image);
             user_name = (TextView) itemView.findViewById(R.id.all_users_profile_username);
         }
     }
 
-    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList, ArrayList<String> profilePicList) {
+    public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList) {
         this.context = context;
         this.fullNameList = fullNameList;
         this.userNameList = userNameList;
-        this.profilePicList = profilePicList;
     }
 
     @Override
@@ -52,25 +54,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
-        holder.user_name.setText("@" + userNameList.get(position));
-        //Glide.with(context).load(profilePicList).into(holder.profileImage);
+        holder.user_name.setText("@"+userNameList.get(position));
 
-        Log.d(TAG, "profilePicSize " + profilePicList.size());
-
-        if(profilePicList.size() > 0)
-        {
-            Log.d(TAG, "Profile Pic List " + profilePicList.get(position));
-            Picasso.get().load(profilePicList.get(position)).into(holder.profileImage);
-        }
-
-        holder.user_name.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "userName Clicked", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                //Intent intent = new Intent(view.getContext(), MainActivity.class);
+               //context.startActivity(intent);
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

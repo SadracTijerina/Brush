@@ -8,8 +8,7 @@
 
     <include
         layout="@layout/app_bar_layout"
-        android:id = "@+id/search_users_bar_layout"
-        >
+        android:id = "@+id/search_users_bar_layout">
     </include>
 
     <RelativeLayout
@@ -54,6 +53,7 @@
         android:icon="@drawable/nav_search"
         android:inputType="textMultiLine" />
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_result_list"
         android:layout_width="match_parent"
@@ -70,6 +70,66 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/categories_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="115dp"
+        android:text="Categories"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:scrollbars="horizontal"
+        android:layout_marginTop="150dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="113dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/search_digital"
+                android:layout_width="110dp"
+                android:layout_height="113dp"
+                android:src="@drawable/search_digital"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"/>
+
+            <ImageButton
+                android:id="@+id/search_artisan"
+                android:layout_width="110dp"
+                android:layout_height="113dp"
+                android:src="@drawable/search_artisan"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"/>
+
+            <ImageButton
+                android:id="@+id/search_photography"
+                android:layout_width="110dp"
+                android:layout_height="113dp"
+                android:src="@drawable/search_photography"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"/>
+
+            <ImageButton
+                android:id="@+id/search_traditional"
+                android:layout_width="110dp"
+                android:layout_height="113dp"
+                android:src="@drawable/search_traditional"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 
 </RelativeLayout>

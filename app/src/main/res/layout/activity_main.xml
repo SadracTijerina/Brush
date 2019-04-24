@@ -17,16 +17,21 @@
         </include>
 
         <ImageView
-            android:id="@+id/app_bar_layout_logo"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_alignStart="@+id/main_page_toolbar"
-            android:layout_alignLeft="@+id/main_page_toolbar"
+            android:id="@+id/brushLogo"
+            android:layout_width="155dp"
+            android:layout_height="32dp"
+            android:layout_alignStart="@+id/search_users_bar_layout"
+            android:layout_alignLeft="@+id/search_users_bar_layout"
+            android:layout_alignBottom="@+id/search_users_bar_layout"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="141dp"
-            android:layout_marginLeft="141dp"
-            android:layout_marginTop="6dp"
-            android:adjustViewBounds="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="102dp"
+            android:layout_marginLeft="102dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="103dp"
+            android:layout_marginRight="102dp"
+            android:layout_marginBottom="12dp"
             android:src="@drawable/logo_word" />
 
         <FrameLayout
