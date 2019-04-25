@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_followers:
-                Toast.makeText(this, "friends", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "followers", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_search:
