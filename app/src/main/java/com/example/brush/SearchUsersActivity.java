@@ -79,6 +79,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
         fullNameList = new ArrayList<>();
         usernameList = new ArrayList<>();
+        userID = new ArrayList<>();
 
 
         mToolbar = (Toolbar) findViewById(R.id.search_users_bar_layout);
@@ -187,7 +188,7 @@ public class SearchUsersActivity extends AppCompatActivity {
 
                     FirebaseStorage storage = FirebaseStorage.getInstance();
                     storageReference = storage.getReference();
-                    
+
                     if (username.toLowerCase().contains(searchedString.toLowerCase()))
                     {
                         fullNameList.add(name);

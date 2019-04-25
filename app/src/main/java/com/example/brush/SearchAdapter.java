@@ -55,15 +55,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, int position) {
+    public void onBindViewHolder(SearchViewHolder holder, final int position) {
         holder.user_name.setText("@"+userNameList.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(view.getContext(), MainActivity.class);
-                //intent.putExtra("userID", userID.get(position));
-               //context.startActivity(intent);
+                Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
+                intent.putExtra("userID", userID.get(position));
+                context.startActivity(intent);
             }
         });
     }
