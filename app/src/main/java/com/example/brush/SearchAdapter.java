@@ -25,10 +25,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     Context userProfile;
 
-
     ArrayList<String> fullNameList;
     ArrayList<String> userNameList;
     ArrayList<String> userID;
+
+
+    private int pos;
 
     String TAG = "333";
 
@@ -39,6 +41,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             super(itemView);
             user_name = (TextView) itemView.findViewById(R.id.all_users_profile_username);
         }
+
     }
 
     public SearchAdapter(Context context, ArrayList<String> fullNameList, ArrayList<String> userNameList, ArrayList<String> userID) {
@@ -55,14 +58,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, final int position) {
+    public void onBindViewHolder(SearchViewHolder holder, int position) {
         holder.user_name.setText("@"+userNameList.get(position));
+        Log.d(TAG, "position: " + position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "position after: " + pos);
                 Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
-                intent.putExtra("userID", userID.get(position));
+                intent.putExtra("userID", userID.get(pos));
                 context.startActivity(intent);
             }
         });

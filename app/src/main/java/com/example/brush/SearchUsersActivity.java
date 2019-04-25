@@ -171,8 +171,10 @@ public class SearchUsersActivity extends AppCompatActivity {
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 fullNameList.clear();
                 usernameList.clear();
+                userID.clear();
                 searchResultList.removeAllViews();
 
                 int counter = 0;
