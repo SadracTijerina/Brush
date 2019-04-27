@@ -71,7 +71,7 @@
 
     <ImageButton
         android:id="@+id/search_digital"
-        android:layout_width="116dp"
+        android:layout_width="110dp"
         android:layout_height="106dp"
         android:layout_below="@+id/search_artisan"
         android:layout_alignStart="@+id/search_artisan"
