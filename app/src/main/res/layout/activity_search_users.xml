@@ -80,7 +80,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/search_digital" />
 
@@ -92,7 +92,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="63dp"
         android:layout_marginLeft="63dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/search_traditional"
         android:layout_toRightOf="@+id/search_traditional"
         android:src="@drawable/search_artisan" />
@@ -106,7 +106,7 @@
         android:layout_alignRight="@+id/search_traditional"
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:src="@drawable/search_photography" />
@@ -121,7 +121,6 @@
         android:layout_gravity="center"
         android:layout_marginStart="29dp"
         android:layout_marginLeft="29dp"
-        android:layout_marginTop="33dp"
         android:layout_marginRight="20dp"
         android:src="@drawable/search_traditional" />
 

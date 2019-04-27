@@ -46,8 +46,6 @@ public class SearchUsersActivity extends AppCompatActivity {
     private StorageReference storageReference;
 
     private ImageButton searchDigital, searchArtisan, searchPhotography, searchTraditional;
-    private HorizontalScrollView horizontalScrollView;
-    private RecyclerView recyclerView;
     private TextView textViewCategories;
 
     ArrayList<String> fullNameList;
@@ -78,8 +76,6 @@ public class SearchUsersActivity extends AppCompatActivity {
         searchPhotography = (ImageButton) findViewById(R.id.search_photography);
         searchTraditional = (ImageButton) findViewById(R.id.search_traditional);
         textViewCategories = (TextView) findViewById(R.id.categories_textview);
-        //recyclerView = (RecyclerView) findViewById(R.id.search_box);
-
 
 
 
@@ -110,7 +106,7 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //show a feed of art related to that category
-                Log.d(TAG, "search traditonal ");
+                Log.d(TAG, "search traditional ");
             }
         });
 
