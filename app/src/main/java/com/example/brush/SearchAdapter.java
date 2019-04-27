@@ -30,8 +30,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     ArrayList<String> userID;
 
 
-    private int pos;
-
     String TAG = "333";
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
@@ -58,16 +56,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, int position) {
+    public void onBindViewHolder(SearchViewHolder holder, final int position) {
         holder.user_name.setText("@"+userNameList.get(position));
         Log.d(TAG, "position: " + position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "position after: " + pos);
+                Log.d(TAG, "position after: " + position);
                 Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
-                intent.putExtra("userID", userID.get(pos));
+                intent.putExtra("userID", userID.get(position));
                 context.startActivity(intent);
             }
         });

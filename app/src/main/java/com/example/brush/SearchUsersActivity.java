@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerViewAccessibilityDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -44,6 +46,8 @@ public class SearchUsersActivity extends AppCompatActivity {
     private StorageReference storageReference;
 
     private ImageButton searchDigital, searchArtisan, searchPhotography, searchTraditional;
+    private HorizontalScrollView horizontalScrollView;
+    private RecyclerView recyclerView;
     private TextView textViewCategories;
 
     ArrayList<String> fullNameList;
@@ -74,6 +78,9 @@ public class SearchUsersActivity extends AppCompatActivity {
         searchPhotography = (ImageButton) findViewById(R.id.search_photography);
         searchTraditional = (ImageButton) findViewById(R.id.search_traditional);
         textViewCategories = (TextView) findViewById(R.id.categories_textview);
+        //recyclerView = (RecyclerView) findViewById(R.id.search_box);
+
+
 
 
 

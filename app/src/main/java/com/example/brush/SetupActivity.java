@@ -78,6 +78,7 @@ public class SetupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile images");
 
         username = (EditText) findViewById(R.id.setup_username);
@@ -279,6 +280,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("Name", Name);
             userMap.put("Username", UserName);
             userMap.put("Bio", "");
+
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

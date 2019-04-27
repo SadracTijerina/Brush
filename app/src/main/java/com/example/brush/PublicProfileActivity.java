@@ -45,6 +45,8 @@ public class PublicProfileActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.public_profile_username);
         userBio = (TextView) findViewById(R.id.public_profile_bio);
 
+        //If currentuser is following user visiting, change text to follow
+
         profileRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
