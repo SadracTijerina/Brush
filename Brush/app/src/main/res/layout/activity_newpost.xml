@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".NewPostActivity">
+
+
+    <include
+        android:id="@+id/update_post_page_toolbar"
+        layout="@layout/app_bar_layout" />
+
+    <ImageButton
+        android:id="@+id/bidButton"
+        android:layout_width="312dp"
+        android:layout_height="55dp"
+        android:layout_alignStart="@+id/galleryButton"
+        android:layout_alignLeft="@+id/galleryButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginLeft="-1dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="265dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bid_post" />
+
+    <ImageButton
+        android:id="@+id/galleryButton"
+        android:layout_width="339dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="180dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/post_post" />
+
+    <ImageButton
+        android:id="@+id/announcementButton"
+        android:layout_width="310dp"
+        android:layout_height="56dp"
+        android:layout_alignStart="@+id/galleryButton"
+        android:layout_alignLeft="@+id/galleryButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="94dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/a_post" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="268dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/bidButton"
+        android:layout_alignEnd="@+id/bidButton"
+        android:layout_alignRight="@+id/bidButton"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:layout_marginBottom="47dp"
+        app:srcCompat="@drawable/logo_letter" />
+
+
+
+
+</RelativeLayout>
