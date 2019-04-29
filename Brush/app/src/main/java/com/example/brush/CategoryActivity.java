@@ -31,7 +31,7 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Gallery");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts").child("Gallery");
 
         mCategoryList = (RecyclerView) findViewById(R.id.category_list);
         mCategoryList.setHasFixedSize(true);
