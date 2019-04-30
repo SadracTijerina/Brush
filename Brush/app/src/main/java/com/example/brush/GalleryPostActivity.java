@@ -1,5 +1,4 @@
 package com.example.brush;
-
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,6 +54,7 @@ public class GalleryPostActivity extends AppCompatActivity {
     private Uri ImageUri;
     private StorageReference PostImagesreference;
     private DatabaseReference GalleryRef;
+    private DatabaseReference UsersRef;
     private String saveCurrentDate;
     private String saveCurrentTime;
     private String postRandomName;
@@ -62,6 +64,8 @@ public class GalleryPostActivity extends AppCompatActivity {
     private ProgressDialog loadingbar;
     private String category;
     private String tempcategory;
+    private String username;
+    private String profilePicture;
     private int selectedButton;
 
 
@@ -74,7 +78,8 @@ public class GalleryPostActivity extends AppCompatActivity {
 
         current_user_id = mAuth.getCurrentUser().getUid();
         PostImagesreference = FirebaseStorage.getInstance().getReference();
-        GalleryRef = FirebaseDatabase.getInstance().getReference().child("Gallery");
+        GalleryRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_id);
         /*GalleryRef.child("postRandomName").child("uid").setValue();
         GalleryRef.child("postRandomName").child("date").setValue(" ");
         GalleryRef.child("postRandomName").child("time").setValue(" ");
@@ -126,6 +131,22 @@ public class GalleryPostActivity extends AppCompatActivity {
                 ValidatePostInfo();
             }
         });
+        UsersRef.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                username = dataSnapshot.child("Username").getValue().toString();
+                profilePicture = dataSnapshot.child("profilePictureLink").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+        });
+
     }
 
 
@@ -214,6 +235,9 @@ public class GalleryPostActivity extends AppCompatActivity {
         galleryMap.put("description",description);
         galleryMap.put("postimage",downloadUrl);
         galleryMap.put("category",category);
+        galleryMap.put("username",username);
+        galleryMap.put("profilePicture",profilePicture);
+        galleryMap.put("postType","gallery");
 
 
         //galleryMap.put("profileImage",userProfileImage);
@@ -240,20 +264,37 @@ public class GalleryPostActivity extends AppCompatActivity {
 
     private void OpenGallery()
     {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent,Gallery_pick);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+        //Intent galleryIntent = new Intent();
+        //galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //galleryIntent.setType("image/*");
+        //startActivityForResult(galleryIntent,Gallery_pick);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Gallery_pick && resultCode == RESULT_OK && data!=null)
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
-            ImageUri = data.getData();
-            post_image.setImageURI(ImageUri);
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if(resultCode == RESULT_OK)
+            {
+                loadingbar.setTitle("Gallery Post");
+                loadingbar.setMessage("Please wait while we are cropping your image...");
+                loadingbar.show();
+                loadingbar.setCanceledOnTouchOutside(true);
+
+                ImageUri = result.getUri();
+                post_image.setImageURI(ImageUri);
+
+                loadingbar.dismiss();
+            }
+
         }
 
     }
@@ -276,4 +317,3 @@ public class GalleryPostActivity extends AppCompatActivity {
         startActivity(mainIntent);
     }
 }
-

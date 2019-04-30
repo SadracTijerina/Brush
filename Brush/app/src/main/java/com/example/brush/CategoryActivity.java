@@ -1,9 +1,12 @@
 package com.example.brush;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,9 +19,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CategoryActivity extends AppCompatActivity {
 
-    private String mPost_key = null;
 
     private String category = null;
 
@@ -26,18 +30,26 @@ public class CategoryActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
+    private String TAG = "33333";
+
+    private CircleImageView profilePic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts").child("Gallery");
+
+        profilePic = (CircleImageView) findViewById(R.id.category_profilepicture);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts");
 
         mCategoryList = (RecyclerView) findViewById(R.id.category_list);
         mCategoryList.setHasFixedSize(true);
         mCategoryList.setLayoutManager(new LinearLayoutManager(this));
 
         category = getIntent().getExtras().getString("Category");
+
+
     }
 
     protected void onStart(){
@@ -52,13 +64,24 @@ public class CategoryActivity extends AppCompatActivity {
                 )
         {
             @Override
-            protected void populateViewHolder(CategoryViewHolder viewHolder, Category model, int position) {
-                if(category.equals(model.getCategory()))
+            protected void populateViewHolder(CategoryViewHolder viewHolder, Category model, int position)
+            {
+
+                if(category.equals(model.getCategory()) && model.getPostType().equals("gallery"))
                 {
+                    Log.d(TAG, "populateViewHolder: ");
                     viewHolder.setDesc(model.getDescription());
                     viewHolder.setUsername(model.getUsername());
                     viewHolder.setPostImage(model.getPostimage());
-                    viewHolder.setProfilePicture(model.getUid());
+                    viewHolder.setProfilePicture(model.getProfilePicture());
+                }
+                else
+                {
+                    viewHolder.setDesc("null");
+                    viewHolder.setPostImage("null");
+                    viewHolder.setProfilePicture("null");
+                    viewHolder.setUsername("null");
+
                 }
             }
         };
@@ -66,48 +89,69 @@ public class CategoryActivity extends AppCompatActivity {
         mCategoryList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class CategoryViewHolder extends RecyclerView.ViewHolder{
+    public static class CategoryViewHolder extends ViewHolder{
 
         View mView;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
-
-            //itemView = mView;
-
             mView = itemView;
         }
 
-        public void setUsername(String username){
-
+        public void setUsername(String username)
+        {
             TextView post_username = (TextView) mView.findViewById(R.id.category_username);
-            post_username.setText(username);
+
+
+            if(!username.equals("null")) {
+                post_username.setText(username);
+            }
+            else
+            {
+                mView.setVisibility(View.GONE);
+            }
         }
 
-        public void setDesc(String desc){
+        public void setDesc(String desc)
+        {
             TextView post_desc = (TextView) mView.findViewById(R.id.category_description);
-            post_desc.setText(desc);
+
+            if(!desc.equals("null")) {
+                post_desc.setText(desc);
+            }
+            else
+            {
+                mView.setVisibility(View.GONE);
+            }
         }
 
         public void setPostImage(String postImage)
         {
             ImageView category_picture = (ImageView) mView.findViewById(R.id.category_image);
-            Picasso.get().load(postImage).into(category_picture);
+            CardView cardView = (CardView) mView.findViewById(R.id.category_post);
+
+            if(!postImage.equals("null")) {
+                Picasso.get().load(postImage).into(category_picture);
+            }
+            else
+            {
+                mView.setVisibility(View.GONE);
+
+            }
 
         }
 
-        public void setProfilePicture(String uid)
+        public void setProfilePicture(String profilePicture)
         {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profile images/" + uid);
-
-            String profile_picture = storageReference.getDownloadUrl().toString();
-
-            Log.d("3333", "profilepicturelink " + storageReference.getDownloadUrl());
-
             ImageView category_profile_picture = (ImageView) mView.findViewById(R.id.category_profilepicture);
 
-            Picasso.get().load(profile_picture).into(category_profile_picture);
+            if(!profilePicture.equals("null")) {
+                Picasso.get().load(profilePicture).into(category_profile_picture);
+            }
+            else
+            {
+                mView.setVisibility(View.GONE);
+            }
         }
-
     }
 }

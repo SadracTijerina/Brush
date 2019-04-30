@@ -1,20 +1,46 @@
 package com.example.brush;
 
 public class Category {
-    String username,description,postimage,category, date, time, uid;
+    String username,description,postimage, postType, date, time, uid, category, profilePicture;
 
     public Category() {
 
     }
 
-    public Category(String username, String description, String postimage, String category, String date, String time, String uid) {
+    public Category(String username, String description, String postimage, String postType, String date, String time, String uid, String category, String profilePicture) {
         this.username = username;
         this.description = description;
         this.postimage = postimage;
-        this.category = category;
+        this.postType = postType;
         this.date = date;
         this.time = time;
         this.uid = uid;
+        this.category = category;
+        this.profilePicture = profilePicture;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 
     public String getUsername() {
@@ -41,13 +67,6 @@ public class Category {
         this.postimage = postimage;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getDate() {
         return date;

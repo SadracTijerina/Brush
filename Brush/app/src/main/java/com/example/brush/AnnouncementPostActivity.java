@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
@@ -32,12 +35,15 @@ public class AnnouncementPostActivity extends AppCompatActivity {
     private EditText a_description;
     private EditText a_title;
     private DatabaseReference ARef;
+    private DatabaseReference UsersRef;
     private FirebaseAuth mAuth;
     private String current_user_id;
     private ProgressDialog loadingbar;
     private String saveCurrentDate;
     private String saveCurrentTime;
     private String postRandomName;
+    private String username;
+    private String profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,9 @@ public class AnnouncementPostActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         current_user_id = mAuth.getCurrentUser().getUid();
-        ARef = FirebaseDatabase.getInstance().getReference().child("Announcements");
+
+        ARef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_id);
 
         mToolbar = (Toolbar) findViewById(R.id.update_post_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -71,6 +79,21 @@ public class AnnouncementPostActivity extends AppCompatActivity {
             }
         });
 
+        UsersRef.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                username = dataSnapshot.child("Username").getValue().toString();
+                profilePicture = dataSnapshot.child("profilePictureLink").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+        });
 
     }
 
@@ -108,6 +131,8 @@ public class AnnouncementPostActivity extends AppCompatActivity {
 
         postRandomName = saveCurrentDate + saveCurrentTime;
 
+
+
         HashMap aMap = new HashMap();
 
         aMap.put("uid",current_user_id);
@@ -115,6 +140,9 @@ public class AnnouncementPostActivity extends AppCompatActivity {
         aMap.put("time",saveCurrentTime);
         aMap.put("description",description);
         aMap.put("title",title);
+        aMap.put("username",username);
+        aMap.put("profilePicture",profilePicture);
+        aMap.put("postType","announcement");
 
         ARef.child(current_user_id + postRandomName).updateChildren(aMap).addOnCompleteListener(new OnCompleteListener() {
             @Override

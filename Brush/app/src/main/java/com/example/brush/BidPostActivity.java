@@ -30,6 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,9 +62,12 @@ public class BidPostActivity extends AppCompatActivity {
 
     private StorageReference BidImagesReference;
     private DatabaseReference bidRef;
+    private DatabaseReference UsersRef;
     private String saveCurrentDate;
     private String saveCurrentTime;
     private String postRandomName;
+    private String username;
+    private String profilePicture;
     private String downloadUrl;
     private static final int Gallery_pick = 1;
 
@@ -85,8 +90,9 @@ public class BidPostActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         current_user_id = mAuth.getCurrentUser().getUid();
-        BidImagesReference = FirebaseStorage.getInstance().getReference();
-        bidRef = FirebaseDatabase.getInstance().getReference().child("Bids");
+        BidImagesReference = FirebaseStorage.getInstance().getReference().child("Bid Images");
+        bidRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_user_id);
 
         mToolbar = (Toolbar) findViewById(R.id.update_post_page_toolbar);
         setSupportActionBar(mToolbar);
@@ -130,6 +136,22 @@ public class BidPostActivity extends AppCompatActivity {
                 selectedButton = category_group.getCheckedRadioButtonId();
                 tempcategory = Integer.toString(selectedButton);
                 ValidatePostInfo();
+            }
+        });
+
+        UsersRef.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                username = dataSnapshot.child("Username").getValue().toString();
+                profilePicture = dataSnapshot.child("profilePictureLink").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
             }
         });
     }
@@ -176,7 +198,7 @@ public class BidPostActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calForTime.getTime());
 
         postRandomName = saveCurrentDate + saveCurrentTime;
-        StorageReference filePath = BidImagesReference.child("Bid Images").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
+        StorageReference filePath = BidImagesReference.child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
 
         filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>()
         {
@@ -187,7 +209,6 @@ public class BidPostActivity extends AppCompatActivity {
                 {
                     downloadUrl = task.getResult().getDownloadUrl().toString();
                     Toast.makeText(BidPostActivity.this,"Image uploaded successfully...",Toast.LENGTH_SHORT);
-
                     SavingPostInfoToDatabase();
                 }
                 else
@@ -226,6 +247,9 @@ public class BidPostActivity extends AppCompatActivity {
         bidMap.put("time",time);
         bidMap.put("postimage",downloadUrl);
         bidMap.put("category",category);
+        bidMap.put("username",username);
+        bidMap.put("profilePicture",profilePicture);
+        bidMap.put("postType","bid");
 
         bidRef.child(current_user_id + postRandomName).updateChildren(bidMap)
                 .addOnCompleteListener(new OnCompleteListener()
@@ -251,20 +275,38 @@ public class BidPostActivity extends AppCompatActivity {
 
     private void OpenGallery()
     {
-        Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent,Gallery_pick);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
+
+        //Intent galleryIntent = new Intent();
+        //galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //galleryIntent.setType("image/*");
+        //startActivityForResult(galleryIntent,Gallery_pick);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Gallery_pick && resultCode == RESULT_OK && data!=null)
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
         {
-            ImageUri = data.getData();
-            bid_image.setImageURI(ImageUri);
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if(resultCode == RESULT_OK)
+            {
+                loadingbar.setTitle("Bid Post");
+                loadingbar.setMessage("Please wait while we are cropping your image...");
+                loadingbar.show();
+                loadingbar.setCanceledOnTouchOutside(true);
+
+                ImageUri = result.getUri();
+                bid_image.setImageURI(ImageUri);
+
+                loadingbar.dismiss();
+            }
+
         }
 
     }
