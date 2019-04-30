@@ -62,7 +62,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="13dp"
         android:layout_marginLeft="13dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="110dp"
         android:text="Categories"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20dp"
@@ -86,8 +86,8 @@
 
     <ImageButton
         android:id="@+id/search_digital"
-        android:layout_width="110dp"
-        android:layout_height="106dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         android:layout_below="@+id/search_artisan"
         android:layout_alignStart="@+id/search_artisan"
         android:layout_alignLeft="@+id/search_artisan"
@@ -101,8 +101,8 @@
 
     <ImageButton
         android:id="@+id/search_artisan"
-        android:layout_width="110dp"
-        android:layout_height="113dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         android:layout_alignTop="@+id/search_traditional"
         android:layout_gravity="center"
         android:layout_marginStart="63dp"
@@ -114,8 +114,8 @@
 
     <ImageButton
         android:id="@+id/search_photography"
-        android:layout_width="110dp"
-        android:layout_height="113dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         android:layout_below="@+id/search_traditional"
         android:layout_alignEnd="@+id/search_traditional"
         android:layout_alignRight="@+id/search_traditional"
@@ -128,8 +128,8 @@
 
     <ImageButton
         android:id="@+id/search_traditional"
-        android:layout_width="110dp"
-        android:layout_height="113dp"
+        android:layout_width="105dp"
+        android:layout_height="108dp"
         android:layout_below="@+id/categories_textview"
         android:layout_alignStart="@+id/search_result_list"
         android:layout_alignLeft="@+id/search_result_list"

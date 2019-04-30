@@ -170,6 +170,7 @@ public class SearchUsersActivity extends AppCompatActivity {
                     textViewCategories.setVisibility(View.GONE);
                     setAdapter(s.toString());
                     Search();
+
                 }
                 else {
                     fullNameList.clear();
