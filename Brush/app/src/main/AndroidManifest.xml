@@ -20,7 +20,8 @@
         android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
         <activity android:name=".CategoryActivity"
             android:parentActivityName=".SearchUsersActivity"></activity>
         <activity

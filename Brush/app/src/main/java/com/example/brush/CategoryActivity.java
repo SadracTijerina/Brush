@@ -1,6 +1,8 @@
 package com.example.brush;
 
 import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -80,18 +82,28 @@ public class CategoryActivity extends AppCompatActivity {
 
         final FirebaseRecyclerAdapter<Category, CategoryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Category, CategoryViewHolder>
                 (
-                     Category.class,
+                        Category.class,
                         R.layout.category_post,
                         CategoryViewHolder.class,
                         mDatabase
                 )
         {
             @Override
-            protected void populateViewHolder(CategoryViewHolder viewHolder, Category model, int position) {
+            protected void populateViewHolder(CategoryViewHolder viewHolder, final Category model, int position) {
                 viewHolder.setDesc(model.getDescription());
                 viewHolder.setUsername(model.getUsername());
                 viewHolder.setPostImage(model.getPostimage());
                 viewHolder.setProfilePicture(model.getProfilePicture());
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Intent profileIntent = new Intent(CategoryActivity.this, PublicProfileActivity.class);
+                        profileIntent.putExtra("userID", model.getUid());
+                        startActivity(profileIntent);
+                    }
+                });
             }
         };
         mCategoryList.setAdapter(firebaseRecyclerAdapter);
