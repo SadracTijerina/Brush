@@ -2,7 +2,6 @@ package com.example.brush;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -30,9 +29,8 @@ public class CategoryActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private String TAG = "33333", currentUserID;
+    private String TAG = "33333";
 
-    private CircleImageView profilePic;
     private Toolbar mToolbar;
 
 
@@ -43,9 +41,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
 
-        profilePic = (CircleImageView) findViewById(R.id.category_profilepicture);
 
         mToolbar = (Toolbar) findViewById(R.id.category_toolbar);
         setSupportActionBar(mToolbar);
@@ -77,9 +73,6 @@ public class CategoryActivity extends AppCompatActivity {
         {
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Categories").child("a");
         }
-
-
-
     }
 
     protected void onStart(){
@@ -95,14 +88,12 @@ public class CategoryActivity extends AppCompatActivity {
         {
             @Override
             protected void populateViewHolder(CategoryViewHolder viewHolder, Category model, int position) {
-
                 viewHolder.setDesc(model.getDescription());
                 viewHolder.setUsername(model.getUsername());
                 viewHolder.setPostImage(model.getPostimage());
                 viewHolder.setProfilePicture(model.getProfilePicture());
             }
         };
-
         mCategoryList.setAdapter(firebaseRecyclerAdapter);
     }
 
@@ -120,7 +111,6 @@ public class CategoryActivity extends AppCompatActivity {
             TextView post_username = (TextView) mView.findViewById(R.id.category_username);
 
             post_username.setText(username);
-
         }
 
         public void setDesc(String desc)
@@ -128,22 +118,18 @@ public class CategoryActivity extends AppCompatActivity {
             TextView post_desc = (TextView) mView.findViewById(R.id.category_description);
 
             post_desc.setText(desc);
-
         }
 
         public void setPostImage(String postImage)
         {
             ImageView category_picture = (ImageView) mView.findViewById(R.id.category_image);
-            CardView cardView = (CardView) mView.findViewById(R.id.category_post);
 
             Picasso.get().load(postImage).into(category_picture);
-
-
         }
 
         public void setProfilePicture(String profilePicture)
         {
-            ImageView category_profile_picture = (ImageView) mView.findViewById(R.id.category_profilepicture);
+            CircleImageView category_profile_picture = (CircleImageView) mView.findViewById(R.id.category_profilepicture);
 
             Picasso.get().load(profilePicture).into(category_profile_picture);
 
