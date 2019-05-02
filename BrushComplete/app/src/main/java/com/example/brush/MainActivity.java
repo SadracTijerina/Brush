@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         userRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
