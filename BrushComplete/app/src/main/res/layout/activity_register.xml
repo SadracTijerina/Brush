@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_logo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <include
+        android:id="@+id/register_toolbar"
+        layout="@layout/app_bar_layout">
+    </include>
+
+    <EditText
+        android:id="@+id/register_email"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="235dp"
+        android:fontFamily="@font/futura"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <!--This is re-enter email box-->
+    <EditText
+        android:id="@+id/register_email2"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/register_email"
+        android:layout_alignLeft="@+id/register_email"
+        android:layout_alignEnd="@+id/register_email"
+        android:layout_alignRight="@+id/register_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="300dp"
+        android:fontFamily="@font/futura"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="19dp"
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:hint="Re-enter email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp" />
+
+    <!--This is password box-->
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/register_email"
+        android:layout_alignLeft="@+id/register_email"
+        android:layout_alignEnd="@+id/register_email"
+        android:layout_alignRight="@+id/register_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="365dp"
+        android:layout_marginEnd="0dp"
+        android:fontFamily="@font/futura"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp" />
+
+    <!--This is re-enter password box-->
+
+    <EditText
+        android:id="@+id/register_password2"
+        android:layout_width="321dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/register_email"
+        android:layout_alignLeft="@+id/register_email"
+        android:layout_alignEnd="@+id/register_password"
+        android:layout_alignRight="@+id/register_password"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:fontFamily="@font/futura"
+        android:layout_marginTop="430dp"
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:hint="Re-enter password"
+        android:inputType="textPassword"
+        android:padding="10dp" />
+
+    <!--This is create account button-->
+    <Button
+        android:id="@+id/register_create_account"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginTop="495dp"
+        android:background="@drawable/buttons"
+        android:text="Create account"
+        android:fontFamily="@font/futura"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="267dp"
+        android:layout_height="186dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        app:srcCompat="@drawable/logo_letter" />
+
+</RelativeLayout>

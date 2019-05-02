@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.brush">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo_letter"
+        android:label=""
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+
+        <activity android:name=".SelectionActivity"></activity>
+        <activity android:name=".PlaceBidActivity" />
+        <activity android:name=".Category" />
+        <activity android:name=".CategoryActivity"
+            android:parentActivityName=".SearchUsersActivity"/>
+        <activity android:name=".SelfBidsActivity" />
+        <activity android:name=".SelfGalleryActivity" />
+        <activity android:name=".SelfUpdatesActivity" />
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".UpdatesActivity" />
+        <activity android:name=".PaymentDetails" />
+        <activity android:name=".ConfigActivity" />
+        <activity android:name=".ClickPostActivity" />
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".PublicProfileActivity" />
+        <activity android:name=".Followers" />
+        <activity
+            android:name=".ListFollowersActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".ShowProfilePictureActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".UserProfileActivity" />
+        <activity
+            android:name=".PublicProfileActivity"
+            android:parentActivityName=".ListFollowersActivity" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".SearchUsersActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AnnouncementPostActivity" />
+        <activity android:name=".GalleryPostActivity" />
+        <activity android:name=".BidPostActivity" />
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivty"
+            android:parentActivityName=".StartActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".StartActivity" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+    </application>
+
+</manifest>

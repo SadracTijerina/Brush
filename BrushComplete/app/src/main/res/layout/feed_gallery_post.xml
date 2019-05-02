@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="315dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="23dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="10dp"
+    android:id="@+id/feed_gallery_view">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/feed_gallery_profilepicture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:src="@drawable/default_profile_picture" />
+
+            <TextView
+                android:id="@+id/feed_gallery_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="username"
+                android:textColor="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/feed_gallery_image"
+            android:layout_width="310dp"
+            android:layout_height="310dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/feed_gallery_title"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="start"
+            android:paddingLeft="10dp"
+            android:text="Title"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/feed_gallery_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="The post description"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/feed_bid_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="price"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/feed_buy_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="5dp"
+            android:text="View Item"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimaryDark" />
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

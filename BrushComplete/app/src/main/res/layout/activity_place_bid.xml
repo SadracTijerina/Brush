@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/placebid_page_toolbar"
+        layout="@layout/app_bar_layout" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/bid"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bids"/>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/futura"
+                android:background="@drawable/inputs"
+                android:text="Price $"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/bid_price_fb"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/futura"
+                android:layout_margin="10dp"
+                android:text="Price $"
+                android:gravity="center"
+                android:background="@drawable/inputs" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/bAmount"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:fontFamily="@font/futura"
+            android:layout_height="50dp"
+            android:hint="Enter bid amount"
+            android:gravity="center"
+            android:background="@drawable/inputs"/>
+        <Button
+            android:id="@+id/placeBid"
+            android:text="Place Bid"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/futura"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/buttons"/>
+    </LinearLayout>
+
+</RelativeLayout>

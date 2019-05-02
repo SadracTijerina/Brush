@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-115dp">
+
+        <include
+            android:id="@+id/public_profile_toolbar"
+            layout="@layout/app_bar_layout">
+
+        </include>
+        <ImageView
+            android:id="@+id/brushLogo"
+            android:layout_width="155dp"
+            android:layout_height="32dp"
+            android:layout_alignStart="@+id/search_users_bar_layout"
+            android:layout_alignLeft="@+id/search_users_bar_layout"
+            android:layout_alignBottom="@+id/search_users_bar_layout"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="102dp"
+            android:layout_marginLeft="102dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="103dp"
+            android:layout_marginRight="102dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/logo_word" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/public_profile_default_pic"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_below="@id/public_profile_toolbar"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@null"
+            android:paddingTop="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/dfp" />
+
+        <TextView
+            android:id="@+id/public_profile_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_toRightOf="@id/public_profile_default_pic"
+            android:gravity="top"
+            android:paddingLeft="20dp"
+            android:fontFamily="@font/futura"
+            android:text="Full Name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/public_profile_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/public_profile_full_name"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toRightOf="@id/public_profile_default_pic"
+            android:fontFamily="@font/futura"
+            android:gravity="top"
+            android:paddingLeft="20dp"
+            android:text="username"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/public_profile_message"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/public_profile_username"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/messagebutton" />
+
+        <Button
+            android:id="@+id/public_profile_follow"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/public_profile_message"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/buttons"
+            android:fontFamily="@font/futura"
+            android:text="Follow"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="652dp" />
+
+        <TextView
+            android:id="@+id/public_profile_bio"
+            android:layout_width="275dp"
+            android:layout_height="90dp"
+            android:fontFamily="@font/futura"
+            android:layout_below="@id/public_profile_default_pic"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="25dp"
+            android:text="Welcome to my art page! I specialize in tradiitional and digital art!"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/public_profile_updates"
+            android:layout_below="@id/public_profile_bio"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/bids"
+            android:scaleType="centerCrop"
+            android:src="@drawable/updates" />
+
+        <ImageButton
+            android:id="@+id/public_profile_gallery"
+            android:layout_below="@id/public_profile_updates"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/bids"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gallery_bar" />
+
+        <ImageButton
+            android:id="@+id/public_profile_shop"
+            android:layout_below="@id/public_profile_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/bids"
+            android:scaleType="centerCrop"
+            android:src="@drawable/shop_bar" />
+
+
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

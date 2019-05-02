@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_post_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:scaleType="fitCenter"
+    tools:context=".AnnouncementPostActivity">
+
+    <include
+        android:id="@+id/a_page_toolbar"
+        layout="@layout/app_bar_layout" />
+
+    <ImageView
+        android:id="@+id/a_image"
+        android:layout_width="235dp"
+        android:layout_height="213dp"
+        android:layout_below="@id/a_page_toolbar"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="5dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/announcement" />
+
+    <EditText
+        android:id="@+id/a_title"
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/a_image"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/inputs"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Write title here..."
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:fontFamily="@font/futura"
+        android:scaleType="fitCenter" />
+
+
+    <EditText
+        android:id="@+id/a_description"
+        android:layout_width="266dp"
+        android:layout_height="96dp"
+        android:layout_below="@id/a_title"
+        android:layout_centerInParent="true"
+        android:background="@drawable/inputs"
+        android:gravity="center"
+        android:fontFamily="@font/futura"
+        android:hint="Write announcement here..." />
+
+
+    <Button
+        android:id="@+id/a_post"
+        android:layout_width="272dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/a_description"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/buttons"
+        android:scaleType="fitCenter"
+        android:text="Post"
+        android:fontFamily="@font/futura"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorLink="@color/colorWhite" />
+
+
+
+</RelativeLayout>

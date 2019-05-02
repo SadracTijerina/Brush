@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".NewPostActivity">
+
+
+    <include
+        android:id="@+id/new_page_toolbar"
+        layout="@layout/app_bar_layout" />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_below="@+id/new_page_toolbar"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/logo_letter" />
+
+    <ImageButton
+        android:id="@+id/bidButton"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_below="@+id/image"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bids"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bid_post" />
+
+    <ImageButton
+        android:id="@+id/galleryButton"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_below="@+id/bidButton"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bids"
+        android:scaleType="centerCrop"
+        android:src="@drawable/post_post" />
+
+    <ImageButton
+        android:id="@+id/announcementButton"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_below="@+id/galleryButton"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bids"
+        android:scaleType="centerCrop"
+        android:src="@drawable/a_post" />
+
+
+
+
+
+
+</RelativeLayout>
